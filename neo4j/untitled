@@ -1,0 +1,91 @@
+// =======================
+// USERS
+// =======================
+CREATE
+(u1:User {
+    id: 1,
+    name: "Alice",
+    age: 25,
+    city: "Chennai"
+}),
+(u2:User {
+    id: 2,
+    name: "Bob",
+    age: 30,
+    city: "Madurai"
+}),
+(u3:User {
+    id: 3,
+    name: "Charlie",
+    age: 28,
+    city: "Coimbatore"
+}),
+(u4:User {
+    id: 4,
+    name: "David",
+    age: 35,
+    city: "Bangalore"
+}),
+(u5:User {
+    id: 5,
+    name: "Eva",
+    age: 22,
+    city: "Chennai"
+});
+
+
+CREATE
+(m1:Movie {
+    id: 101,
+    title: "Interstellar",
+    genre: "Sci-Fi",
+    rating: 9
+}),
+(m2:Movie {
+    id: 102,
+    title: "Inception",
+    genre: "Sci-Fi",
+    rating: 8
+}),
+(m3:Movie {
+    id: 103,
+    title: "Titanic",
+    genre: "Romance",
+    rating: 7
+}),
+(m4:Movie {
+    id: 104,
+    title: "Joker",
+    genre: "Drama",
+    rating: 8
+});
+
+MATCH
+(a:User {name: "Alice"}),
+(b:User {name: "Bob"}),
+(c:User {name: "Charlie"}),
+(d:User {name: "David"}),
+(e:User {name: "Eva"}),
+
+(i:Movie {title: "Interstellar"}),
+(n:Movie {title: "Inception"}),
+(t:Movie {title: "Titanic"}),
+(j:Movie {title: "Joker"})
+
+CREATE
+(a)-[:FRIEND]->(b),
+(a)-[:FRIEND]->(c),
+(b)-[:FRIEND]->(d),
+(c)-[:FRIEND]->(e),
+
+(a)-[:WATCHED {rating: 10}]->(i),
+(a)-[:WATCHED {rating: 9}]->(n),
+
+(b)-[:WATCHED {rating: 8}]->(n),
+(b)-[:WATCHED {rating: 6}]->(t),
+
+(c)-[:WATCHED {rating: 7}]->(j),
+
+(d)-[:WATCHED {rating: 9}]->(i),
+
+(e)-[:WATCHED {rating: 8}]->(t);

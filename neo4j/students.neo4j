@@ -1,0 +1,72 @@
+CREATE
+(s1:Student {name:'John', age:25}),
+(s2:Student {name:'Alice', age:22}),
+(s3:Student {name:'Bob', age:28}),
+
+(c1:Course {title:'Neo4j'}),
+(c2:Course {title:'Python'}),
+
+(l1:Lesson {name:'Nodes', credits: 10}),
+(l2:Lesson {name:'Relationships', credits: 9}),
+(l3:Lesson {name:'Cypher', credits: 8}),
+
+(c1)-[:HAS_LESSON]->(l1),
+(c1)-[:HAS_LESSON]->(l2),
+(c1)-[:HAS_LESSON]->(l3),
+
+(s1)-[:COMPLETED]->(l1),
+(s1)-[:COMPLETED]->(l2),
+
+(s2)-[:COMPLETED]->(l1),
+(s2)-[:COMPLETED]->(l2),
+(s2)-[:COMPLETED]->(l3)
+
+
+Predicates
+
+1. ANY - Atleast one item matches
+2. ALL - Every Item Matches
+3. NONE -> No Item Matches.
+
+ANY:
+====
+
+1. Find students who have completed at least one lesson.
+
+Sol 1: MATCH (s:Student)-[c:COMPLETED]->(l:Lesson) RETURN DISTINCT s.name;
+Sol 2:
+
+MATCH (s:Student)-[:COMPLETED]->(l:Lesson)
+WITH s, collect(l.name) AS lessons
+WHERE ANY(lesson in lessons WHERE lesson = 'Cypher')
+RETURN s.name;
+
+
+ALL:
+====
+
+Find all students who completed only lessons whose credits is greater than 9.
+
+MATCH (s:Student)-[:COMPLETED]->(l:Lesson)
+WITH s, collect(l.credits) AS credits
+WHERE ALL(credit in credits WHERE credit > 8)
+RETURN s.name;
+
+
+NONE:
+=====
+
+Find students who completed some lessons but not Cypher.
+
+MATCH (s:Student)-[:COMPLETED]->(l:Lesson)
+WITH s, collect(l.name) AS lessons
+WHERE NONE(lesson in lessons WHERE lesson = 'Cypher')
+RETURN s.name;
+
+Find students who havent completed Cypher.
+
+MATCH (s:Student)
+OPTIONAL MATCH (s)-[:COMPLETED]->(l:Lesson)
+WITH s, collect(l.name) AS lessons
+WHERE NONE(lesson in lessons WHERE lesson = 'Cypher')
+RETURN s.name;

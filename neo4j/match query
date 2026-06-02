@@ -1,0 +1,11 @@
+MATCH (m:Movie) WITH COLLECT(m.title) as all_movies
+
+MATCH (u:User)-[w:WATCHED]->(um:Movie)
+
+WITH u, all_movies, collect(DISTINCT um.title) AS user_movies
+
+WITH u, [x IN all_movies WHERE NOT x in user_movies] AS suggested_movies
+
+
+MATCH (m:Movie) WITH COLLECT(m.title) As all_movies
+NOT MATCH (u:User)-[w:WATCHED]

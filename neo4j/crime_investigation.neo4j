@@ -1,0 +1,237 @@
+CREATE CONSTRAINT person_id IF NOT EXISTS
+FOR (p:Person)
+REQUIRE p.person_id IS UNIQUE;
+
+CREATE CONSTRAINT account_id IF NOT EXISTS
+FOR (a:Account)
+REQUIRE a.account_no IS UNIQUE;
+
+CREATE CONSTRAINT device_id IF NOT EXISTS
+FOR (d:Device)
+REQUIRE d.device_id IS UNIQUE;
+
+
+CREATE
+(p1:Person {
+    person_id: 1,
+    name: "Arun",
+    age: 28,
+    occupation: "Engineer"
+}),
+
+(p2:Person {
+    person_id: 2,
+    name: "Bala",
+    age: 35,
+    occupation: "Trader"
+}),
+
+(p3:Person {
+    person_id: 3,
+    name: "Charan",
+    age: 42,
+    occupation: "Unknown"
+}),
+
+(p4:Person {
+    person_id: 4,
+    name: "Divya",
+    age: 31,
+    occupation: null
+}),
+
+(p5:Person {
+    person_id: 5,
+    name: "Ezhil",
+    age: 26,
+    occupation: "Student"
+});
+
+
+CREATE
+(a1:Account {
+    account_no: "ACC1001",
+    bank: "Axis Bank",
+    balance: 250000
+}),
+
+(a2:Account {
+    account_no: "ACC1002",
+    bank: "SBI",
+    balance: 12000
+}),
+
+(a3:Account {
+    account_no: "ACC1003",
+    bank: "ICICI",
+    balance: 870000
+});
+
+
+CREATE
+(d1:Device {
+    device_id: "DEV001",
+    type: "Mobile",
+    os: "Android"
+}),
+
+(d2:Device {
+    device_id: "DEV002",
+    type: "Laptop",
+    os: "Windows"
+}),
+
+(d3:Device {
+    device_id: "DEV003",
+    type: "Mobile",
+    os: "iPhone"
+});
+
+
+CREATE
+(l1:Location {
+    city: "Chennai"
+}),
+
+(l2:Location {
+    city: "Bangalore"
+}),
+
+(l3:Location {
+    city: "Mumbai"
+});
+
+
+
+CREATE
+(c1:Crime {
+    case_id: "CR100",
+    type: "Money Laundering"
+}),
+
+(c2:Crime {
+    case_id: "CR101",
+    type: "Cyber Fraud"
+});
+
+MATCH
+(p1:Person {name:"Arun"}),
+(p2:Person {name:"Bala"}),
+(p3:Person {name:"Charan"}),
+(p4:Person {name:"Divya"}),
+(p5:Person {name:"Ezhil"}),
+
+(a1:Account {account_no:"ACC1001"}),
+(a2:Account {account_no:"ACC1002"}),
+(a3:Account {account_no:"ACC1003"}),
+
+(d1:Device {device_id:"DEV001"}),
+(d2:Device {device_id:"DEV002"}),
+(d3:Device {device_id:"DEV003"}),
+
+(l1:Location {city:"Chennai"}),
+(l2:Location {city:"Bangalore"}),
+(l3:Location {city:"Mumbai"}),
+
+(c1:Crime {case_id:"CR100"}),
+(c2:Crime {case_id:"CR101"})
+
+CREATE
+
+(p1)-[:OWNS]->(a1),
+(p2)-[:OWNS]->(a2),
+(p3)-[:OWNS]->(a3),
+
+(p1)-[:USES]->(d1),
+(p2)-[:USES]->(d2),
+(p3)-[:USES]->(d1),
+(p4)-[:USES]->(d3),
+
+(p1)-[:VISITED]->(l1),
+(p2)-[:VISITED]->(l2),
+(p3)-[:VISITED]->(l1),
+(p4)-[:VISITED]->(l3),
+
+(p2)-[:TRANSFERRED {
+    amount: 50000
+}]->(a1),
+
+(p3)-[:TRANSFERRED {
+    amount: 300000
+}]->(a2),
+
+(p3)-[:INVOLVED_IN]->(c1),
+(p2)-[:INVOLVED_IN]->(c2),
+
+(p1)-[:KNOWS]->(p2),
+(p2)-[:KNOWS]->(p3),
+(p3)-[:KNOWS]->(p4),
+(p4)-[:KNOWS]->(p5);
+
+
+Q1: Cyber Crime -> Classsify Suspects based on age group.
+
+    - Young (<30)
+    - Middle (30 -39)
+    - Senior (40+)
+
+Ans:
+
+MATCH (p:Person) RETURN p.name, p.age,
+CASE
+  WHEN p.age < 30 THEN "Young"
+  WHEN p.age < 40 THEN "Middle"
+  ELSE "Senior"
+END AS risk_group;
+
+
+Q2: Handle Missing values in select statement.
+
+Ans:
+
+MATCH (p:Person)
+RETURN p.name, coalesce(p.occupation, "Unknown") AS occupation;
+
+# coalesce - return first non-null values in the given expression/list
+
+
+Q3: Exists -> Crime Association. Figure out persons who are involved in crimes.
+
+Ans:
+
+MATCH (p:Person)
+
+WHERE EXISTS {
+    MATCH (p)-[:INVOLVED_IN]->(:Crime)
+}
+
+RETURN p.name;
+
+
+Q4: Not Exists -> Not involved in crime:
+
+MATCH (p:Person)
+
+WHERE NOT EXISTS {
+    MATCH (p)-[:INVOLVED_IN]->(:Crime)
+}
+
+RETURN p.name;
+
+
+Q5: Set a value after investigation of a crime
+
+MATCH (p:Person)
+WITH collect(p) AS people
+
+FOREACH(person IN people | SET person.is_investigation_done = true );
+
+Q6: Person who knows a suspect involved in crime.
+
+MATCH path = (p1:Person)-[:KNOWS]->(suspect:Person)
+
+WHERE exists {
+  MATCH (suspect)-[:INVOLVED_IN]->(:Crime)
+}
+
+Return p1.name, suspect.name, path;

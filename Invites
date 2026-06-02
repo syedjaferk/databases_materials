@@ -1,0 +1,79 @@
+🎓 Session 01 
+🎯 Topic: Need of DB & PostgreSql Architecture Flow.
+📅 Date: February 21st, 2026 
+🕒 Time: 9:00 PM – 10:00 PM 
+📍 Meet Link: https://meet.jit.si/d2b5ebea-fc0a-4095-9f03-163bbde37c73
+
+🔍 What’s in it for you?
+
+🧠 Understand the Architecture of PostgreSQL
+
+✅ High-level PostgreSQL architecture
+✅ Query lifecycle (Parse → Plan → Execute)
+✅ Memory structure & Shared Buffers
+✅ WAL & transaction flow
+
+🎓 Session 02
+🎯 Topic: Users, Roles, Groups & Mastering SELECT with Filters in PostgreSQL.
+📅 Date: February 24th, 2026 
+🕒 Time: 9:00 PM – 10:00 PM 
+📍 Meet Link: https://meet.jit.si/d2b5ebea-fc0a-4095-9f03-163bbde37c73
+
+🔍 What’s in it for you?
+
+🧠 Understand PostgreSQL Access Control & Query Power
+
+👤 Users, Roles & Groups
+
+✅ What is a Role in PostgreSQL?
+✅ Difference between User & Role
+✅ Creating Users & Roles
+✅ Login vs No-Login roles
+✅ Role inheritance
+✅ Creating Groups (Role as group pattern)
+✅ Granting & Revoking privileges
+✅ Default privileges
+✅ Real-world access control design
+
+🔎 SELECT & Filters (Deep Dive)
+
+✅ Basic SELECT structure
+✅ WHERE clause variations
+✅ AND / OR / NOT usage
+✅ IN & NOT IN
+✅ BETWEEN
+✅ LIKE & ILIKE
+✅ IS NULL / IS NOT NULL
+✅ ORDER BY
+✅ LIMIT & OFFSET
+✅ DISTINCT
+✅ Aliases
+✅ Combining multiple conditions
+✅ Practical filtering examples
+
+
+
+🎓 Session 03
+🎯 Topic: CREATE, UPDATE, DELETE, TRUNCATE & ALTER TABLE.
+📅 Date: February 26th, 2026 
+🕒 Time: 9:00 PM – 10:00 PM 
+📍 Meet Link: https://meet.jit.si/d2b5ebea-fc0a-4095-9f03-163bbde37c73
+
+🔍 What’s in it for you?
+
+🧠 Learn how to design tables, insert and modify data safely, remove records correctly, and evolve table structures without breaking production.
+
+In this session, we’ll cover:
+
+✅ Creating tables with proper constraints
+✅ Updating records safely with conditions
+✅ Deleting data without disasters
+✅ Understanding TRUNCATE vs DELETE performance
+✅ Modifying tables using ALTER TABLE
+✅ Real-world flows and production safety practices
+
+
+
+
+
+

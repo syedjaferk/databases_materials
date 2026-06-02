@@ -1,0 +1,19 @@
+1. Find all crimes committed by Ravi
+2. Find crimes happened in Chennai
+3. Find suspects connected to Shadow Fox gang
+4. Count crimes per city
+5. Update suspect age (any suspect to any value)
+6. Find all suspects involved in high severity crimes
+7. Find cities with more than 1 crime
+8. Find all victims affected by robbery cases
+9. Find crimes committed using guns
+10. Find suspects involved in crimes in Chennai
+11. Find all crimes after a specific date
+12. Find all suspects connected through KNOWS relationship
+13. Find all cities where critical crimes happened
+14. Find the youngest suspect
+15. Find all victims and crime locations
+16. Find suspects who know more than one person
+17. Find total number of relationships
+18. Find all node labels
+19. Find top 3 recent crimes

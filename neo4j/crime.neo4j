@@ -1,0 +1,62 @@
+CREATE CONSTRAINT suspect_id IF NOT EXISTS FOR (s:Suspect) REQUIRE s.id IS UNIQUE;
+CREATE CONSTRAINT crime_id IF NOT EXISTS FOR (c:Crime) REQUIRE c.id IS UNIQUE;
+CREATE CONSTRAINT victim_id IF NOT EXISTS FOR (v:Victim) REQUIRE v.id IS UNIQUE;
+CREATE CONSTRAINT city_name IF NOT EXISTS FOR (c:City) REQUIRE c.name IS UNIQUE;
+CREATE CONSTRAINT weapon_name IF NOT EXISTS FOR (w:Weapon) REQUIRE w.name IS UNIQUE;
+
+
+CREATE (:City {name: "Chennai"}), (:City {name: "Bangalore"}), (:City {name: "Hyderabad"});
+
+CREATE (:Weapon {name: "Knife"}), (:Weapon {name: "Gun"}), (:Weapon {name: "Laptop"});
+
+CREATE
+(:Suspect { id: 1, name: "Ravi", age: 32, gang: "Shadow Fox" }),
+(:Suspect { id: 2, name: "Arun", age: 28, gang: "Night Wolves" }),
+(:Suspect { id: 3, name: "Karthik", age: 35, gang: "Shadow Fox" });
+
+
+CREATE (:Victim { id: 1, name: "Priya", age: 24 }), (:Victim { id: 2, name: "John", age: 40 });
+
+CREATE
+(:Crime { id: 101, type: "Robbery", severity: "High", date: "2026-05-10" }),
+(:Crime { id: 102, type: "Cyber Fraud", severity: "Medium", date: "2026-05-12" }),
+(:Crime { id: 103, type: "Murder", severity: "Critical", date: "2026-05-14" });
+
+
+MATCH (s:Suspect {id: 1}) MATCH (c:Crime {id: 101}) CREATE (s)-[:COMMITTED]->(c);
+MATCH (s:Suspect {id: 2}) MATCH (c:Crime {id: 102}) CREATE (s)-[:COMMITTED]->(c);
+MATCH (s:Suspect {id: 3}) MATCH (c:Crime {id: 103}) CREATE (s)-[:COMMITTED]->(c);
+
+
+MATCH (c:Crime {id: 101}) (city:City {name: "Chennai"})
+CREATE (c)-[:HAPPENED_IN]->(city);
+
+MATCH (c:Crime {id: 102}) MATCH (city:City {name: "Bangalore"})
+CREATE (c)-[:HAPPENED_IN]->(city);
+
+MATCH (c:Crime {id: 103}) MATCH (city:City {name: "Hyderabad"})
+CREATE (c)-[:HAPPENED_IN]->(city);
+
+MATCH (c:Crime {id: 101}) MATCH (w:Weapon {name: "Knife"})
+CREATE (c)-[:USED]->(w);
+
+MATCH (c:Crime {id: 102}) MATCH (w:Weapon {name: "Laptop"})
+CREATE (c)-[:USED]->(w);
+
+MATCH (c:Crime {id: 103}) MATCH (w:Weapon {name: "Gun"})
+CREATE (c)-[:USED]->(w);
+
+
+MATCH (v:Victim {id: 1}) MATCH (c:Crime {id: 101})
+CREATE (v)-[:AFFECTED_BY]->(c);
+
+MATCH (v:Victim {id: 2}) MATCH (c:Crime {id: 103})
+CREATE (v)-[:AFFECTED_BY]->(c);
+
+
+MATCH (s1:Suspect {id: 1}) MATCH (s2:Suspect {id: 3})
+CREATE (s1)-[:KNOWS]->(s2);
+
+MATCH (s1:Suspect {id: 2}) MATCH (s2:Suspect {id: 1})
+CREATE (s1)-[:KNOWS]->(s2);
+all_movies

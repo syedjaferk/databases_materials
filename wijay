@@ -1,0 +1,44 @@
+--
+-- PostgreSQL database cluster dump
+--
+
+\restrict HebxlfBrpEbDx02hgg4F9TsAQzDPWhpbunznzVzMToKT7ESaBzFUd3Nn8kiwC4d
+
+SET default_transaction_read_only = off;
+
+SET client_encoding = 'UTF8';
+SET standard_conforming_strings = on;
+
+--
+-- Roles
+--
+
+CREATE ROLE developer;
+ALTER ROLE developer WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:E8gFFkYm7Q6JDKuP5vcT4g==$5Bl+D5q6TZ0NrOUtUne4bcuYgRa2cxct7xYyypToaEc=:m42RjvqlBSJ+EZ8ZZJU1kU2MIm2h9uLkyf+P2XLF7Qo=';
+CREATE ROLE jafer;
+ALTER ROLE jafer WITH NOSUPERUSER INHERIT NOCREATEROLE NOCREATEDB LOGIN NOREPLICATION NOBYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:vrGpOjoDoWRsWZZK84MBlg==$PG7RX8vw030MW6xnbJZD2FkfqdOb/STkXBYL1/DgRCE=:QSxsYu68K8OjbI0KrQ52+fIZuRdcALFUkqeNTkfsmL0=';
+CREATE ROLE postgres;
+ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION BYPASSRLS;
+CREATE ROLE syedjaferk;
+ALTER ROLE syedjaferk WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION NOBYPASSRLS PASSWORD 'SCRAM-SHA-256$4096:lSwIDL5JBMgLzU/LubuCqw==$cqAjVyjD34oXQLpvBBAuA0G0Z7183++bg1PBvcERdKg=:rRRFe5dJQPv+tBDTla/azbcrMvMAzaweojSAqDb/C8s=';
+
+--
+-- User Configurations
+--
+
+
+--
+-- Role memberships
+--
+
+GRANT developer TO jafer WITH INHERIT TRUE GRANTED BY postgres;
+
+
+
+
+\unrestrict HebxlfBrpEbDx02hgg4F9TsAQzDPWhpbunznzVzMToKT7ESaBzFUd3Nn8kiwC4d
+
+--
+-- PostgreSQL database cluster dump complete
+--
+

@@ -1,0 +1,83 @@
+Dataset:
+========
+
+CREATE
+(u1:User {id:1, name:"Alice", age:24, country:"India"}),
+(u2:User {id:2, name:"Bob", age:29, country:"India"}),
+(u3:User {id:3, name:"Charlie", age:31, country:"USA"}),
+(u4:User {id:4, name:"David", age:27, country:"UK"}),
+(u5:User {id:5, name:"Eva", age:22, country:"India"});
+
+CREATE
+(p1:Post {id:101, title:"Neo4j Basics", category:"Database", likes:120}),
+(p2:Post {id:102, title:"Redis Streams", category:"Backend", likes:80}),
+(p3:Post {id:103, title:"FastAPI Guide", category:"Backend", likes:150}),
+(p4:Post {id:104, title:"Graph Algorithms", category:"Database", likes:200}),
+(p5:Post {id:105, title:"Docker Tips", category:"DevOps", likes:60});
+
+CREATE
+(i1:Interest {name:"Databases"}),
+(i2:Interest {name:"Backend"}),
+(i3:Interest {name:"DevOps"});
+
+MATCH
+(a:User {name:"Alice"}),
+(b:User {name:"Bob"}),
+(c:User {name:"Charlie"}),
+(d:User {name:"David"}),
+(e:User {name:"Eva"})
+
+CREATE
+(a)-[:FOLLOWS]->(b),
+(a)-[:FOLLOWS]->(c),
+(b)-[:FOLLOWS]->(c),
+(c)-[:FOLLOWS]->(d),
+(d)-[:FOLLOWS]->(e),
+(e)-[:FOLLOWS]->(a);
+
+MATCH
+(a:User {name:"Alice"}),
+(b:User {name:"Bob"}),
+(c:User {name:"Charlie"}),
+
+(p1:Post {id:101}),
+(p2:Post {id:102}),
+(p3:Post {id:103}),
+(p4:Post {id:104}),
+(p5:Post {id:105})
+
+CREATE
+(a)-[:POSTED]->(p1),
+(a)-[:POSTED]->(p2),
+(b)-[:POSTED]->(p3),
+(c)-[:POSTED]->(p4),
+(c)-[:POSTED]->(p5);
+
+
+MATCH
+(a:User {name:"Alice"}),
+(b:User {name:"Bob"}),
+(c:User {name:"Charlie"}),
+
+(i1:Interest {name:"Databases"}),
+(i2:Interest {name:"Backend"}),
+(i3:Interest {name:"DevOps"})
+
+CREATE
+(a)-[:LIKES]->(i1),
+(a)-[:LIKES]->(i2),
+
+(b)-[:LIKES]->(i2),
+
+(c)-[:LIKES]->(i1),
+(c)-[:LIKES]->(i3);
+
+
+MATCH (u:User)-[:POSTED]->(p:Post)
+WITH u,
+CASE
+    WHEN u.age >= 18 THEN "Adult"
+    ELSE "Minor"
+END AS category,
+avg(p.likes) AS avg_likes ORDER BY avg_likes DESC
+RETURN u.name, avg_likes, category;

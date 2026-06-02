@@ -1,0 +1,101 @@
+POSTGRESQL
+
+    This session introduces the relational model and explains how ACID properties ensure data consistency in PostgreSQL.
+    Participants will learn the various data types available in PostgreSQL and how to choose the right type for each column.
+    We will explore constraints such as primary key, foreign key, unique, and check to enforce data integrity.
+    The concept of normalization from 1NF to 3NF will be explained with practical table design examples.
+    Different types of joins like inner, left, right, and full joins will be practiced with real queries.
+    Subqueries and Common Table Expressions (CTE) will be used to simplify complex SQL logic.
+    Indexing techniques using B-tree and hash indexes will be demonstrated for query optimization.
+    Transactions and isolation levels will be covered to understand concurrency handling.
+    Creation of views and materialized views will be used to simplify reporting queries.
+    Triggers and PL/pgSQL functions will be introduced for automating database actions.
+    The EXPLAIN ANALYZE tool will be used to understand query performance.
+    Table partitioning strategies will be discussed for handling large datasets.
+    JSONB support in PostgreSQL will be used for semi-structured data.
+    UPSERT operations using ON CONFLICT will be implemented.
+    Roles and permission management will be covered for security.
+    Backup and restore strategies will be demonstrated.
+
+
+
+MONGODB
+
+    The session explains how the document model differs from relational tables.
+    BSON structure and how MongoDB stores data internally will be discussed.
+    Basic CRUD operations will be practiced using Mongo shell.
+    The difference between embedded and referenced documents will be taught.
+    Aggregation pipeline will be used for analytics queries.
+    Indexing strategies in MongoDB will be explored.
+    Full-text search capabilities will be implemented.
+    Schema versioning techniques will be introduced.
+    Pagination using skip and limit will be practiced.
+    Lookup operations will be used as join alternatives.
+    Multi-document transactions will be demonstrated.
+    Validation rules will be added to collections.
+    Change streams will be used for real-time events.
+    Basics of sharding and scalability will be explained.
+    MongoDB Atlas cloud features will be explored.
+    Common performance pitfalls will be discussed.
+
+
+
+REDIS
+
+    Redis key-value mindset will be introduced.
+    String operations will be used for counters and caching.
+    List data type will be applied for queues.
+    Set operations will be used for unique collections.
+    Hashes will store structured user sessions.
+    Sorted sets will be used for leaderboards.
+    TTL feature will be applied for expiring data.
+    Pub/Sub model will be used for messaging.
+    Streams will be introduced for event logs.
+    RDB and AOF persistence models will be compared.
+    Cache-aside and write-through patterns will be explained.
+    Rate limiting logic will be built using Redis.
+    Distributed locks will be implemented.
+    Redis as session store will be demonstrated.
+    Monitoring and debugging Redis will be practiced.
+
+
+
+NEO4J
+
+    Graph database concepts will be introduced.
+    Nodes and relationships will be created.
+    Cypher query language basics will be practiced.
+    Pattern matching in graphs will be explored.
+    Graph traversal techniques will be implemented.
+    Shortest path algorithms will be demonstrated.
+    Indexing in Neo4j will be configured.
+    Recommendation logic will be built.
+    Graph data modeling will be discussed.
+    CSV import into Neo4j will be shown.
+    Performance tuning for graphs will be explained.
+    Community detection concepts will be introduced.
+    Centrality measures will be calculated.
+    Access control in Neo4j will be covered.
+    Real-world graph use cases will be discussed.
+
+
+INFLUXDB 
+
+    Time-series database concepts will be introduced.
+    Measurements and points structure will be explained.
+    Difference between tags and fields will be taught.
+    Retention policies will be configured.
+    Basic Influx queries will be practiced.
+    Continuous queries will be created.
+    Down-sampling strategies will be implemented.
+    Telegraf agent setup will be shown.
+    Alerting mechanisms will be designed.
+    Kapacitor basics will be introduced.
+    Dashboard concepts will be discussed.
+    Write performance tuning will be explained.
+    Schema design for metrics will be taught.
+    Monitoring use cases will be implemented.
+    Integration with applications will be demonstrated.
+
+
+
