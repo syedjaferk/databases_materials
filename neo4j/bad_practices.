@@ -1,0 +1,18 @@
+1. Customer Buys a Product. -> Product ID. - Product Node.
+2. Many Actors involved in a Movie.
+
+Movie {
+    actor1: Wijay
+    actor2: Jafer
+}
+
+
+(Actor {name: "Wijay"})-[:ACTED_IN]->(Movie)
+
+3.
+CEO
+Manager
+Team Lead
+Developer
+
+(:Employee {position: ""})-[:REPORTS_TO]->(:Employee)

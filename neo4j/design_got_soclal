@@ -1,0 +1,29 @@
+User
+    Follow users
+    Like posts
+    create posts
+    comment
+    followers
+
+Nodes:
+======
+
+User
+Post
+Comment
+
+Relationships:
+==============
+
+Follows
+Likes
+CREATED
+Commented
+ON
+
+(:User)-[:FOLLOWS]-(:User) # BiDirectional
+(:User)-[:FOLLOWS]->(:User)
+(:User)-[:CREATED]->(:Post)
+(:User)-[:LIKED]->(:Post)
+(:User)-[:COMMENTED]->(:Comment)
+(:Comment)-[:ON]->(:Post)

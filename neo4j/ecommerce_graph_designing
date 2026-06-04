@@ -1,0 +1,23 @@
+Customer Buy Products
+Products belong to Categories
+Customers Review Products
+
+Nodes:
+Customer
+Product
+Category
+
+
+Relationships: (Verb)
+BOUGHT/PURCHASED
+BELONGS_TO
+REVIEWED
+
+(:Customer)-[:PURCHASED]->(:Product)
+(:Product)-[:BELONGS_TO]->(:Category)
+(:Customer)-[:REVIEWED]->(:Product)
+
+
+MATCH
+(c:Customer)-[:PURCHASED]->(p)<-[:PURCHASED]-(other)
+RETURN DISTINCT other
