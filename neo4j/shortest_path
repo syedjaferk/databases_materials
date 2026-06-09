@@ -1,0 +1,120 @@
+docker run \
+             --restart always \
+             --publish=7474:7474 --publish=7687:7687 \
+             --env NEO4J_AUTH=neo4j/password \
+             --volume=/path/to/your/data:/data \
+         --env NEO4J_PLUGINS='["graph-data-science"]' \
+             neo4j:2026.04.0
+
+
+CREATE
+(alice:Person {name:'Alice'}),
+(bob:Person {name:'Bob'}),
+(charlie:Person {name:'Charlie'}),
+(david:Person {name:'David'}),
+(emma:Person {name:'Emma'}),
+(frank:Person {name:'Frank'}),
+
+(alice)-[:KNOWS]->(bob),
+(bob)-[:KNOWS]->(charlie),
+(charlie)-[:KNOWS]->(david),
+(alice)-[:KNOWS]->(emma),
+(emma)-[:KNOWS]->(frank),
+(frank)-[:KNOWS]->(david);
+
+
+MATCH p = shortestPath(
+    (a:Person {name: 'Alice'})-[*]->(d:Person {name:'David'})
+)
+RETURN p;
+
+MATCH p = ALL SHORTEST(
+    (a:Person {name: 'Alice'})-[*]->(d:Person {name:'David'})
+)
+RETURN p;
+
+MATCH p = shortestPath(
+    (a:Person {name: 'Alice'})-[*]->(d:Person {name:'David'})
+)
+RETURN length(p);
+
+
+CREATE
+(chennai:City {name:'Chennai'}),
+(vellore:City {name:'Vellore'}),
+(bangalore:City {name:'Bangalore'}),
+(hosur:City {name:'Hosur'}),
+(mysore:City {name:'Mysore'}),
+
+(chennai)-[:ROAD {distance:140}]->(vellore),
+(vellore)-[:ROAD {distance:210}]->(bangalore),
+(chennai)-[:ROAD {distance:300}]->(hosur),
+(hosur)-[:ROAD {distance:40}]->(bangalore),
+(bangalore)-[:ROAD {distance:150}]->(mysore);
+
+
+Based on Hop Based shortestPath
+
+MATCH p = shortestPath(
+    (a:City {name: 'Chennai'})-[:ROAD*]->(d:City {name:'Bangalore'})
+)
+RETURN p;
+
+
+CALL gds.graph.project(
+    'routes'
+    'City',
+    {
+        ROAD: {
+            properties: 'distance'
+        }
+    }
+)
+
+
+MATCH
+(source:City {name:'Chennai'})
+(target:City {name: 'Bangalore'})
+
+CALL gds.shortestPath.dijkstra.stream(
+    'routes',
+    {
+        sourceNode: id(source),
+        targetNode: id(target),
+        relationshipWeightProperty: 'distance'
+    }
+)
+
+YEILD totalCost, nodeIds
+RETURN totalCost, nodeIds;
+
+
+
+
+CREATE
+(a:Location {name:'A'}),
+(b:Location {name:'B'}),
+(c:Location {name:'C'}),
+(d:Location {name:'D'}),
+
+(a)-[:ROUTE {cost:1}]->(b),
+(b)-[:ROUTE {cost:100}]->(d),
+
+(a)-[:ROUTE {cost:5}]->(c),
+(c)-[:ROUTE {cost:5}]->(d);
+
+
+
+CREATE
+(chennai:Airport {code:'MAA'}),
+(delhi:Airport {code:'DEL'}),
+(mumbai:Airport {code:'BOM'}),
+(dubai:Airport {code:'DXB'}),
+(london:Airport {code:'LHR'}),
+
+(chennai)-[:FLIGHT {cost:5000}]->(mumbai),
+(mumbai)-[:FLIGHT {cost:8000}]->(london),
+
+(chennai)-[:FLIGHT {cost:7000}]->(delhi),
+(delhi)-[:FLIGHT {cost:4000}]->(dubai),
+(dubai)-[:FLIGHT {cost:2000}]->(london);
