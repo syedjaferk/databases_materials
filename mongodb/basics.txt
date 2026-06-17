@@ -1,0 +1,38 @@
+use <DB Name> - To connect to/create a DB 
+db - To current DB
+db.createCollection("todolists") - To create a collection/table
+
+Insert Data
+
+db.todolist.insertOne(
+    {
+        name: "Alice",
+        age: 28,
+        department: "Engineering"
+    }
+)
+
+
+db.todolists.insertMany(
+    [
+        {
+            name: "Bob",
+            age: 23,
+            department: "Computer"
+        },
+        {
+            name: "Charlie",
+            age: 28,
+            department: "Engineering"
+        }
+    ]
+    
+)
+
+To find a detail: 
+db.todolists.find()
+
+Select by name: 
+db.todolists.findOne({
+    name: "Alice"
+})
