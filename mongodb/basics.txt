@@ -1,4 +1,4 @@
-use <DB Name> - To connect to/create a DB 
+use <DB Name> - To connect to/create a DB
 db - To current DB
 db.createCollection("todolists") - To create a collection/table
 
@@ -11,6 +11,15 @@ db.todolist.insertOne(
         department: "Engineering"
     }
 )
+
+db.users.insertOne({
+    name: "John",
+    age: 28,
+    email: "john@example.com",
+    city: "Chennai",
+    skills: ["Python", "MongoDB", "GO"],
+    is_active: true
+})
 
 
 db.todolists.insertMany(
@@ -26,13 +35,20 @@ db.todolists.insertMany(
             department: "Engineering"
         }
     ]
-    
+
 )
 
-To find a detail: 
+To find a detail:
 db.todolists.find()
 
-Select by name: 
+Select by name:
 db.todolists.findOne({
     name: "Alice"
 })
+
+With Projection:
+db.users.find({"department":"Computer"}, {name:1})
+
+
+Filter with conditions:
+db.users.find({ age: { $gt: 20, $lte: 25 } } , {"name": 1, _id:0} )

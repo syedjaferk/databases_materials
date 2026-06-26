@@ -1,0 +1,124 @@
+Populate Data:
+
+db.employees.insertMany([
+{
+    name: "Alice",
+    age: 25,
+    department: "Engineering",
+    salary: 70000,
+    city: "Chennai",
+    experience: 2,
+    skills: ["Python", "MongoDB"],
+    address: {
+        state: "Tamil Nadu",
+        country: "India"
+    }
+},
+{
+    name: "Bob",
+    age: 32,
+    department: "Engineering",
+    salary: 95000,
+    city: "Bangalore",
+    experience: 8,
+    skills: ["Java", "AWS"],
+    address: {
+        state: "Karnataka",
+        country: "India"
+    }
+},
+{
+    name: "Charlie",
+    age: 28,
+    department: "HR",
+    salary: 50000,
+    city: "Mumbai",
+    experience: 4,
+    skills: ["Recruitment"],
+    address: {
+        state: "Maharashtra",
+        country: "India"
+    }
+},
+{
+    name: "David",
+    age: 35,
+    department: "Engineering",
+    salary: 120000,
+    city: "Chennai",
+    experience: 10,
+    skills: ["Go", "Kubernetes"],
+    address: {
+        state: "Tamil Nadu",
+        country: "India"
+    }
+}
+])
+
+
+1. Updates the first matching document. update alice salary to 75k
+
+db.employees.updateOne(
+| {name: "Alice"},
+| {
+| $set : {
+| salary: 75000
+| }
+| }
+| )
+
+
+
+2. updateMany()
+
+db.employees.updateMany(
+| { department: "Engineering"},
+| {
+|     $set: {
+|             department: "Software Engineering"
+|           }
+| }
+| )
+
+
+3. replaceOne()
+
+db.employees.replaceOne(
+| { name: "Bob"  },
+| { name: "Bob", age:29   })
+
+
+4. Upsert
+
+db.employees.updateOne(
+{name: "Jafer"},
+{"city": "Coimbatore"},
+{upsert: true})
+
+
+Common Update Operators
+
+$set
+$unset - Deleting a field. - db.employees.updateOne( {name: "Bob"}, { $unset: { age: "" } })
+$rename - db.employees.updateOne( {name: "Bob"}, { $rename : { name: "userName"  } })
+$inc -db.employees.updateOne( {name: "David"}, {$inc: {salary: 5000}})
+$mul - db.employees.updateOne( {name: "David"}, {$mul: {salary: 1.10 }})
+$min -
+$currentDate -
+
+
+Array Operators
+
+$push -db.employees.updateOne( {name: "David"}, { $push: { skills: "Docker" }  }  )
+$addToSet - db.employees.updateOne( {name: "David"}, { $addToSet: { skills: "Go" }  }  )
+$pull - db.employees.updateOne( {name: "David"}, { $pull: { skills: "Docker" }  }  )
+$pop - db.employees.updateOne( {name: "David"}, { $pop: { skills: 1 }  }  )
+
+
+
+Limiting Results
+
+limit()
+skip() - OFFSET
+
+db.employees.find().skip(0).limit(2)
